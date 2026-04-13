@@ -22,8 +22,8 @@ Protect your privacy and access Home Assistant via Tor.
 
 ## About
 
-This Tor app allows you to access you Home Assistant instance as an Onion site,
-trough [Tor's Hidden Service][tor-hidden-service] feature. With this feature
+This Tor app allows you to access your Home Assistant instance as an Onion site,
+through [Tor's Hidden Service][tor-hidden-service] feature. With this feature
 enabled, you do not need to open your firewall ports or setup HTTPS to enable
 secure remote access.
 
