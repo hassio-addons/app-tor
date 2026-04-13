@@ -1,8 +1,8 @@
 #!/command/with-contenv bashio
 # shellcheck shell=bash
 # ==============================================================================
-# Home Assistant Community Add-on: Tor
-# Prepares the add-on for startup
+# Home Assistant Community App: Tor
+# Prepares the app for startup
 # ==============================================================================
 declare address
 declare clientname
@@ -25,11 +25,11 @@ readonly hostname_file="${hidden_service_dir}/hostname"
 if bashio::config.true 'hidden_services' \
     && ! bashio::config.has_value 'ports'; then
     bashio::log.fatal
-    bashio::log.fatal 'Add-on configuration is incomplete.'
+    bashio::log.fatal 'App configuration is incomplete.'
     bashio::log.fatal
-    bashio::log.fatal 'Hidden services where enabled, using the'
-    bashio::log.fatal '"hidden_services" add-on configuration option,'
-    bashio::log.fatal 'But the "port" option does not contain any values!'
+    bashio::log.fatal 'Hidden services were enabled, using the'
+    bashio::log.fatal '"hidden_services" app configuration option,'
+    bashio::log.fatal 'But the "ports" option does not contain any values!'
     bashio::log.fatal
     bashio::log.fatal 'Please configure the "ports" option.'
     bashio::exit.nok
@@ -41,11 +41,11 @@ if bashio::config.true 'hidden_services' \
     && ! bashio::config.has_value 'client_names';
 then
     bashio::log.fatal
-    bashio::log.fatal 'Add-on configuration is incomplete.'
+    bashio::log.fatal 'App configuration is incomplete.'
     bashio::log.fatal
-    bashio::log.fatal 'Stealth mode is enabled, using the "stealth" add-on'
+    bashio::log.fatal 'Stealth mode is enabled, using the "stealth" app'
     bashio::log.fatal 'configuration option, but there are no client names'
-    bashio::log.fatal 'configured in the "client_names" add-on option.'
+    bashio::log.fatal 'configured in the "client_names" app option.'
     bashio::log.fatal
     bashio::log.fatal 'Please configure the "client_names" option.'
     bashio::exit.nok
@@ -121,7 +121,7 @@ if bashio::config.true 'hidden_services'; then
             virtual_port=$(echo "${port}" | cut -f2 -d:)
             target_port=$(echo "${port}" | cut -f3 -d:)
         else
-            bashio::log.warning "$port Are not correct format, skipping..."
+            bashio::log.warning "$port is not in the correct format, skipping..."
         fi
         if [[ "${count}" -le 2 ]]; then
             echo "HiddenServicePort ${target_port} ${host}:${virtual_port}" \
@@ -155,7 +155,7 @@ fi
 
 # Figure out the address
 if bashio::config.true 'hidden_services'; then
-    bashio::log.info 'Starting Tor temporarly...'
+    bashio::log.info 'Starting Tor temporarily...'
 
     exec 3< <(tor)
 
@@ -181,7 +181,7 @@ then
     # Following the documentation at:
     # https://community.torproject.org/onion-services/advanced/client-auth/
     while read -r clientname; do
-        # Generate key is they do not exist yet
+        # Generate key if they do not exist yet
         if ! bashio::fs.file_exists "${authorized_clients_dir}/${clientname}.auth"
         then 
             key=$(openssl genpkey -algorithm x25519)
@@ -225,7 +225,7 @@ then
             bashio::log.red "Keys are stored in:"
             bashio::log.red "${clients_dir}"
             bashio::log.red
-            bashio::log.red "Public key":
+            bashio::log.red "Public key:"
             bashio::log.red "${public_key}"
             bashio::log.red
             bashio::log.red "Private key:"
