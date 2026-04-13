@@ -1,4 +1,4 @@
-ARG BUILD_FROM=ghcr.io/hassio-addons/base:19.0.0
+ARG BUILD_FROM=ghcr.io/hassio-addons/base:20.0.4
 # hadolint ignore=DL3006
 FROM ${BUILD_FROM}
 
@@ -15,12 +15,12 @@ ARG WEBTUNNEL_VERSION=v0.0.2
 # Setup base
 RUN \
     apk add --no-cache \
-        coreutils=9.7-r1 \
-        openssl=3.5.4-r0 \
-        tor=0.4.8.21-r0 \
+        coreutils=9.8-r1 \
+        openssl=3.5.6-r0 \
+        tor=0.4.9.6-r0 \
     && apk add --no-cache --virtual .build-dependencies \
-        go=1.24.11-r0 \
-        git=2.49.1-r0 \
+        go=1.25.9-r0 \
+        git=2.52.0-r0 \
     && git clone -b "${OBFS_VERSION}" --single-branch --depth 1 \
         https://github.com/Yawning/obfs4.git /tmp/obfs4 \
     && go build -C /tmp/obfs4 -ldflags '-extldflags "-static" -s -w' -o /usr/local/bin/obfs4proxy ./obfs4proxy \
