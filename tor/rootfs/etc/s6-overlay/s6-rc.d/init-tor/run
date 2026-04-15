@@ -60,6 +60,8 @@ mkdir -p \
 chmod -R 0700 /ssl/tor
 
 # Persist Tor state across restarts to speed up bootstrapping
+# Tor requires the DataDirectory to have mode 0700
+chmod 0700 /data
 echo "DataDirectory /data" >> "${torrc}"
 
 # Find the matching Tor log level
@@ -160,17 +162,21 @@ fi
 if bashio::config.true 'hidden_services'; then
     bashio::log.info 'Starting Tor temporarily...'
 
-    exec 3< <(tor)
+    tor &
+    tor_pid=$!
 
     until bashio::fs.file_exists "${hostname_file}"; do
+        if ! kill -0 "${tor_pid}" >/dev/null 2>&1; then
+            bashio::log.fatal 'Tor failed to start!'
+            bashio::exit.nok
+        fi
         bashio::log.info "Waiting for service to start..."
         sleep 1
     done
 
     address=$(<"${hostname_file}")
-    grep -m 1 "Bootstrapped 100% (done): Done" <&3 >/dev/null 2>&1
-
-    kill "$(pgrep tor)" >/dev/null 2>&1
+    kill "${tor_pid}" >/dev/null 2>&1
+    wait "${tor_pid}" 2>/dev/null || true
 
     bashio::log.info '---------------------------------------------------------'
     bashio::log.info 'Your Home Assistant instance is available on Tor!'
