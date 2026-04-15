@@ -272,7 +272,7 @@ To reset:
 
 1. Stop the Tor app.
 2. Delete the contents of the `/ssl/tor/hidden_service/` directory.
-1. Start the Tor app again. New keys and a new onion address will be
+3. Start the Tor app again. New keys and a new onion address will be
    generated automatically.
 
 **Note**: _If stealth mode is enabled, the old `.auth_private` client key
