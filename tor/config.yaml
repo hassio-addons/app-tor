@@ -17,7 +17,6 @@ ports_description:
   9080/tcp: Tor HTTP proxy port
 map:
   - ssl:rw
-  - data:rw
 options:
   socks: false
   http_tunnel: false
