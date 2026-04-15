@@ -35,7 +35,7 @@ if bashio::config.true 'hidden_services' \
     bashio::exit.nok
 fi
 
-# Checks if client names where configured when using stealth mode
+# Checks if client names were configured when using stealth mode
 if bashio::config.true 'hidden_services' \
     && bashio::config.true 'stealth' \
     && ! bashio::config.has_value 'client_names';
@@ -51,7 +51,7 @@ then
     bashio::exit.nok
 fi
 
-# Created needed directories
+# Create needed directories
 mkdir -p \
     "${authorized_clients_dir}" \
     "${clients_dir}" \
@@ -233,7 +233,7 @@ then
             bashio::log.red
             bashio::log.red 
         else
-            bashio::log.info "Keys for ${clientname} already exists; skipping..."
+            bashio::log.info "Keys for ${clientname} already exist; skipping..."
         fi
     done <<< "$(bashio::config 'client_names')"
 
