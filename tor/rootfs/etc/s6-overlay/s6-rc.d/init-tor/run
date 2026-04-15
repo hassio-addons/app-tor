@@ -59,6 +59,9 @@ mkdir -p \
     || bashio::exit.nok 'Could not create tor data directories'
 chmod -R 0700 /ssl/tor
 
+# Persist Tor state across restarts to speed up bootstrapping
+echo "DataDirectory /data" >> "${torrc}"
+
 # Find the matching Tor log level
 if bashio::config.has_value 'log_level'; then
     case "$(bashio::string.lower "$(bashio::config 'log_level')")" in
