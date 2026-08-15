@@ -102,23 +102,6 @@ fi
 
 # Configure hidden services
 if bashio::config.true 'hidden_services'; then
-    if ! homeassistant_port=$(
-        bashio::api.supervisor GET /core/info false '.port'
-    ); then
-        bashio::log.fatal 'Unable to determine the Home Assistant Core port.'
-        bashio::exit.nok
-    fi
-
-    if ! [[ "${homeassistant_port}" =~ ^[0-9]+$ ]] \
-        || (( homeassistant_port < 1 || homeassistant_port > 65535 )); then
-        bashio::log.fatal \
-            "Supervisor returned an invalid Home Assistant Core port: ${homeassistant_port}"
-        bashio::exit.nok
-    fi
-
-    bashio::log.info \
-        "Detected Home Assistant Core port: ${homeassistant_port}"
-
     echo "HiddenServiceDir ${hidden_service_dir}" >> "${torrc}"
     
     for port in $(bashio::config 'ports'); do
@@ -148,6 +131,25 @@ if bashio::config.true 'hidden_services'; then
         fi
         if [[ "${count}" -le 2 ]]; then
             if [[ "${host}" == 'homeassistant' ]]; then
+                if [[ -z "${homeassistant_port}" ]]; then
+                    if ! homeassistant_port=$(
+                        bashio::api.supervisor GET /core/info false '.port'
+                    ); then
+                        bashio::log.fatal \
+                            'Unable to determine the Home Assistant Core port.'
+                        bashio::exit.nok
+                    fi
+
+                    if ! [[ "${homeassistant_port}" =~ ^[0-9]+$ ]] \
+                        || (( homeassistant_port < 1 || homeassistant_port > 65535 )); then
+                        bashio::log.fatal \
+                            "Supervisor returned an invalid Home Assistant Core port: ${homeassistant_port}"
+                        bashio::exit.nok
+                    fi
+
+                    bashio::log.info \
+                        "Detected Home Assistant Core port: ${homeassistant_port}"
+                fi
                 virtual_port="${homeassistant_port}"
             fi
             echo "HiddenServicePort ${target_port} ${host}:${virtual_port}" \
