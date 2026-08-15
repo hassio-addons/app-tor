@@ -70,7 +70,7 @@ dealing with an unknown issue. Possible values are:
 - `error`: Runtime errors that do not require immediate action.
 - `fatal`: Something went terribly wrong. App becomes unusable.
 
-Please note that each level automatically includes messages from a
+Please note that each level automatically includes log messages from a
 more severe level, e.g., `debug` also shows `info` messages. By default,
 the `log_level` is set to `info`, which is the recommended setting unless
 you are troubleshooting.
@@ -221,7 +221,7 @@ bridges:
     url=https://snowflake-broker.torproject.net/
     ampcache=https://cdn.ampproject.org/
     front=www.google.com
-    ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voys.nl:3478
+    ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478
     utls-imitate=hellorandomizedalpn
 ```
 
@@ -322,7 +322,7 @@ You could also [open an issue here][issue] GitHub.
 The original setup of this repository is by [Franck Nijhof][frenck].
 
 For a full list of all authors and contributors,
-check the contributor's page][contributors].
+check [the contributor's page][contributors].
 
 ## License
 
