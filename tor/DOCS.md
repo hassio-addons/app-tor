@@ -338,8 +338,8 @@ You could also [open an issue here][issue] GitHub.
 
 The original setup of this repository is by [Franck Nijhof][frenck].
 
-For a full list of authors and contributors,
-check the [contributor's page][contributors].
+For a full list of all authors and contributors,
+check [the contributor's page][contributors].
 
 ## License
 
