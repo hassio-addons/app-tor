@@ -91,7 +91,8 @@ network, and allow anybody to use your computer as an open proxy._
 
 Setting this option to `true` opens port `9080` to listen for connections from
 HTTP-speaking applications. Enabling this feature allows you to use other
-applications on your network to access the Tor network via the HTTP proxy.
+applications on your local network to access the Tor network via the HTTP
+proxy.
 
 ### Option: `hidden_services`
 
@@ -165,13 +166,7 @@ If Home Assistant Core listens on port `80`, only this mapping is needed:
 HiddenServicePort 80 homeassistant:80
 ```
 
-Manual mappings can be added alongside `auto` for advanced use. For example:
-
-```yaml
-ports:
-  - "auto"
-  - "192.168.1.60:22:2222"
-```
+Manual mappings can still be added alongside `auto` for advanced use.
 
 The accepted syntax of this configuration is:
 
