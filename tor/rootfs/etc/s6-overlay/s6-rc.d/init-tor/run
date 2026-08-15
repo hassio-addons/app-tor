@@ -6,7 +6,7 @@
 # ==============================================================================
 declare address
 declare clientname
-declare homeassistant_port
+declare homeassistant_port=''
 declare host
 declare key
 declare log_level
@@ -130,7 +130,8 @@ if bashio::config.true 'hidden_services'; then
             bashio::log.warning "$port is not in the correct format, skipping..."
         fi
         if [[ "${count}" -le 2 ]]; then
-            if [[ "${host}" == 'homeassistant' ]]; then
+            if [[ "${host}" == 'homeassistant' ]] \
+                && [[ "${virtual_port}" == '80' || "${virtual_port}" == '8123' ]]; then
                 if [[ -z "${homeassistant_port}" ]]; then
                     if ! homeassistant_port=$(
                         bashio::api.supervisor GET /core/info false '.port'
@@ -230,7 +231,7 @@ then
 
             public_key=$(
                 openssl pkey -pubout \
-                <<< "${key}" \
+                    <<< "${key}" \
                 | sed -e '/----.*PUBLIC KEY----\|^[[:space:]]*$/d' \
                 | base64 -d \
                 | tail -c 32 \
