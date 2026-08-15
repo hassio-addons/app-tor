@@ -70,7 +70,7 @@ dealing with an unknown issue. Possible values are:
 - `error`: Runtime errors that do not require immediate action.
 - `fatal`: Something went terribly wrong. App becomes unusable.
 
-Please note that each level automatically includes log messages from a
+Please note that each level automatically includes messages from a
 more severe level, e.g., `debug` also shows `info` messages. By default,
 the `log_level` is set to `info`, which is the recommended setting unless
 you are troubleshooting.
@@ -159,6 +159,16 @@ The accepted syntax of this configuration is:
 If you do not define a published port, the local port will be used.
 If you do not define a hostname or IP address `homeassistant` will be used.
 
+When a mapping targets `homeassistant`, either explicitly or because no host
+was specified, the app automatically gets the actual Home Assistant Core port
+from Supervisor and uses that port as the hidden-service target. The published
+Onion port is still taken from the configuration as before. This allows
+existing mappings such as `8123` and `8123:80` to keep working even when Home
+Assistant Core is configured to listen on another port.
+
+Mappings that target any other hostname or IP address continue to use the local
+port from the configuration exactly as specified.
+
 ### Option: `bridges`
 
 > Ensure the option value is clear to avoid unintended use of transport plugins and bridges.
@@ -211,7 +221,7 @@ bridges:
     url=https://snowflake-broker.torproject.net/
     ampcache=https://cdn.ampproject.org/
     front=www.google.com
-    ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478
+    ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voys.nl:3478
     utls-imitate=hellorandomizedalpn
 ```
 
@@ -312,7 +322,7 @@ You could also [open an issue here][issue] GitHub.
 The original setup of this repository is by [Franck Nijhof][frenck].
 
 For a full list of all authors and contributors,
-check [the contributor's page][contributors].
+check the contributor's page][contributors].
 
 ## License
 
