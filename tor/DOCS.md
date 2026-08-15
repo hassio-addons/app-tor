@@ -51,7 +51,7 @@ client_names:
   - haremote1
   - haremote2
 ports:
-  - 8123
+  - auto
 bridges: []
 ```
 
@@ -140,16 +140,42 @@ section below for details.
 Configures hosts and ports to publish via a Tor Hidden Service.
 You can list multiple hosts and ports to publish.
 
-For example:
+For normal Home Assistant access, use `auto`:
 
 ```yaml
 ports:
-  - "homeassistant:8123:80"
-  - 22
+  - "auto"
+```
+
+The app gets the active Home Assistant Core port from Supervisor when it
+starts. `auto` always publishes Home Assistant on Onion port `80`. When the
+detected Core port is not `80`, it also publishes the same Onion port number.
+
+For example, if Home Assistant Core listens on port `8123`, `auto` generates
+the equivalent of:
+
+```text
+HiddenServicePort 80 homeassistant:8123
+HiddenServicePort 8123 homeassistant:8123
+```
+
+If Home Assistant Core listens on port `80`, only this mapping is needed:
+
+```text
+HiddenServicePort 80 homeassistant:80
+```
+
+Manual mappings can be added alongside `auto` for advanced use. For example:
+
+```yaml
+ports:
+  - "auto"
+  - "192.168.1.60:22:2222"
 ```
 
 The accepted syntax of this configuration is:
 
+- automatic Home Assistant mapping `"auto"`
 - hostname:local_port:published_port `"homeassistant:8123:8080"`
 - local_ip:local_port:published_port `"192.168.1.60:8123:8080"`
 - hostname:local_port `"homeassistant:8123"`
@@ -158,6 +184,7 @@ The accepted syntax of this configuration is:
 
 If you do not define a published port, the local port will be used.
 If you do not define a hostname or IP address `homeassistant` will be used.
+Manual mappings retain their existing behavior and are not changed by `auto`.
 
 ### Option: `bridges`
 
@@ -210,7 +237,7 @@ bridges:
     fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72
     url=https://snowflake-broker.torproject.net/
     ampcache=https://cdn.ampproject.org/
-    front=www.google.com
+    front=www.google.com/
     ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478
     utls-imitate=hellorandomizedalpn
 ```
@@ -300,7 +327,7 @@ You have several options to get them answered:
 
 - The [Home Assistant Community Apps Discord chat server][discord] for app
   support and feature requests.
-- The [Home Assistant Discord chat server][discord-ha] for general Home
+- The Home Assistant Discord chat server][discord-ha] for general Home
   Assistant discussions and questions.
 - The Home Assistant [Community Forum][forum].
 - Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
@@ -311,8 +338,8 @@ You could also [open an issue here][issue] GitHub.
 
 The original setup of this repository is by [Franck Nijhof][frenck].
 
-For a full list of all authors and contributors,
-check [the contributor's page][contributors].
+For a full list of authors and contributors,
+check the contributor's page][contributors].
 
 ## License
 
