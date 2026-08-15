@@ -140,32 +140,26 @@ section below for details.
 Configures hosts and ports to publish via a Tor Hidden Service.
 You can list multiple hosts and ports to publish.
 
-For normal Home Assistant access, use `auto`:
+For example:
+
+```yaml
+ports:
+  - "homeassistant:8123:80"
+  - 22
+```
+
+For normal Home Assistant access, `auto` can be used instead of configuring
+its HTTP port manually:
 
 ```yaml
 ports:
   - "auto"
 ```
 
-The app gets the active Home Assistant Core port from Supervisor when it
-starts. `auto` always publishes Home Assistant on Onion port `80`. When the
-detected Core port is not `80`, it also publishes the same Onion port number.
-
-For example, if Home Assistant Core listens on port `8123`, `auto` generates
-the equivalent of:
-
-```text
-HiddenServicePort 80 homeassistant:8123
-HiddenServicePort 8123 homeassistant:8123
-```
-
-If Home Assistant Core listens on port `80`, only this mapping is needed:
-
-```text
-HiddenServicePort 80 homeassistant:80
-```
-
-Manual mappings can still be added alongside `auto` for advanced use.
+At startup, `auto` gets the active Home Assistant Core port from Supervisor.
+It publishes Home Assistant on Onion port `80` and, when the detected Core port
+is not `80`, also publishes that same port number. Manual mappings can still be
+used alongside `auto`.
 
 The accepted syntax of this configuration is:
 
@@ -178,7 +172,6 @@ The accepted syntax of this configuration is:
 
 If you do not define a published port, the local port will be used.
 If you do not define a hostname or IP address `homeassistant` will be used.
-Manual mappings retain their existing behavior and are not changed by `auto`.
 
 ### Option: `bridges`
 
