@@ -160,14 +160,14 @@ If you do not define a published port, the local port will be used.
 If you do not define a hostname or IP address `homeassistant` will be used.
 
 When a mapping targets `homeassistant`, either explicitly or because no host
-was specified, the app automatically gets the actual Home Assistant Core port
-from Supervisor and uses that port as the hidden-service target. The published
-Onion port is still taken from the configuration as before. This allows
-existing mappings such as `8123` and `8123:80` to keep working even when Home
-Assistant Core is configured to listen on another port.
+was specified, and uses local port `80` or `8123`, the app gets the actual
+Home Assistant Core port from Supervisor and uses it as the hidden-service
+target. The published Onion port remains exactly as configured. This keeps
+existing mappings such as `8123` and `8123:80` working when Home Assistant
+Core listens on another port.
 
-Mappings that target any other hostname or IP address continue to use the local
-port from the configuration exactly as specified.
+Other local ports, and mappings to other hostnames or IP addresses, continue
+to use the configured local port exactly as specified.
 
 ### Option: `bridges`
 
