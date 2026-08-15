@@ -237,7 +237,7 @@ bridges:
     fingerprint=2B280B23E1107BB62ABFC40DDCC8824814F80A72
     url=https://snowflake-broker.torproject.net/
     ampcache=https://cdn.ampproject.org/
-    front=www.google.com/
+    front=www.google.com
     ice=stun:stun.l.google.com:19302,stun:stun.antisip.com:3478,stun:stun.bluesip.net:3478,stun:stun.dus.net:3478,stun:stun.epygi.com:3478,stun:stun.sonetel.com:3478,stun:stun.uls.co.za:3478,stun:stun.voipgate.com:3478,stun:stun.voys.nl:3478
     utls-imitate=hellorandomizedalpn
 ```
@@ -327,7 +327,7 @@ You have several options to get them answered:
 
 - The [Home Assistant Community Apps Discord chat server][discord] for app
   support and feature requests.
-- The Home Assistant Discord chat server][discord-ha] for general Home
+- The [Home Assistant Discord chat server][discord-ha] for general Home
   Assistant discussions and questions.
 - The Home Assistant [Community Forum][forum].
 - Join the [Reddit subreddit][reddit] in [/r/homeassistant][reddit]
@@ -339,7 +339,7 @@ You could also [open an issue here][issue] GitHub.
 The original setup of this repository is by [Franck Nijhof][frenck].
 
 For a full list of authors and contributors,
-check the contributor's page][contributors].
+check the [contributor's page][contributors].
 
 ## License
 
