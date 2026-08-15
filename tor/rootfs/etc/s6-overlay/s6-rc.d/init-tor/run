@@ -6,6 +6,7 @@
 # ==============================================================================
 declare address
 declare clientname
+declare homeassistant_port=''
 declare host
 declare key
 declare log_level
@@ -104,6 +105,41 @@ if bashio::config.true 'hidden_services'; then
     echo "HiddenServiceDir ${hidden_service_dir}" >> "${torrc}"
     
     for port in $(bashio::config 'ports'); do
+        if [[ "${port}" == 'auto' ]]; then
+            if [[ -z "${homeassistant_port}" ]]; then
+                if ! homeassistant_port=$(
+                    bashio::api.supervisor GET /core/info false '.port'
+                ); then
+                    bashio::log.fatal \
+                        'Unable to determine the Home Assistant Core port.'
+                    bashio::exit.nok
+                fi
+
+                if ! [[ "${homeassistant_port}" =~ ^[0-9]+$ ]] \
+                    || (( homeassistant_port < 1 || homeassistant_port > 65535 )); then
+                    bashio::log.fatal \
+                        "Supervisor returned an invalid Home Assistant Core port: ${homeassistant_port}"
+                    bashio::exit.nok
+                fi
+
+                bashio::log.info \
+                    "Home Assistant Core port detected: ${homeassistant_port}"
+            fi
+
+            bashio::log.info \
+                "Publishing Onion port 80 -> homeassistant:${homeassistant_port}"
+            echo "HiddenServicePort 80 homeassistant:${homeassistant_port}" \
+                >> "${torrc}"
+
+            if [[ "${homeassistant_port}" != '80' ]]; then
+                bashio::log.info \
+                    "Publishing Onion port ${homeassistant_port} -> homeassistant:${homeassistant_port}"
+                echo "HiddenServicePort ${homeassistant_port} homeassistant:${homeassistant_port}" \
+                    >> "${torrc}"
+            fi
+            continue
+        fi
+
         count=$(echo "${port}" | sed 's/[^:]//g'| awk '{ print length }')
         if [[ "${count}" == 0 ]]; then
             host='homeassistant'
