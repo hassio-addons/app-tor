@@ -149,10 +149,13 @@ if bashio::config.true 'hidden_services'; then
                     fi
 
                     bashio::log.info \
-                        "Detected Home Assistant Core port: ${homeassistant_port}"
+                        "Home Assistant Core port detected: ${homeassistant_port}"
                 fi
                 virtual_port="${homeassistant_port}"
             fi
+
+            bashio::log.info \
+                "Publishing Onion port ${target_port} -> ${host}:${virtual_port}"
             echo "HiddenServicePort ${target_port} ${host}:${virtual_port}" \
                 >> "${torrc}"
         fi
