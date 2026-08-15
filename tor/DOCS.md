@@ -51,7 +51,7 @@ client_names:
   - haremote1
   - haremote2
 ports:
-  - 8123
+  - 80
 bridges: []
 ```
 
@@ -140,7 +140,18 @@ section below for details.
 Configures hosts and ports to publish via a Tor Hidden Service.
 You can list multiple hosts and ports to publish.
 
-For example:
+New installations default to Onion port `80` for Home Assistant:
+
+```yaml
+ports:
+  - 80
+```
+
+The app resolves the actual Home Assistant Core HTTP target port from
+Supervisor at startup, so the Onion port can remain `80` whether Core listens
+on port `80`, `8123`, or another configured HTTP port.
+
+For more advanced mappings, for example:
 
 ```yaml
 ports:
@@ -163,8 +174,12 @@ When a mapping targets `homeassistant`, either explicitly or because no host
 was specified, and uses local port `80` or `8123`, the app gets the actual
 Home Assistant Core port from Supervisor and uses it as the hidden-service
 target. The published Onion port remains exactly as configured. This keeps
-existing mappings such as `8123` and `8123:80` working when Home Assistant
+existing saved mappings such as `8123` and `8123:80` working when Home Assistant
 Core listens on another port.
+
+The Ports field in the app configuration shows the saved mapping, not the
+resolved Home Assistant Core target. On startup, the app log shows both the
+detected Core port and each effective Onion-to-target mapping.
 
 Other local ports, and mappings to other hostnames or IP addresses, continue
 to use the configured local port exactly as specified.
