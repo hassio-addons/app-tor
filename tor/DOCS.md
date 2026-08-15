@@ -158,8 +158,25 @@ ports:
 
 At startup, `auto` gets the active Home Assistant Core port from Supervisor.
 It publishes Home Assistant on Onion port `80` and, when the detected Core port
-is not `80`, also publishes that same port number. Manual mappings can still be
-used alongside `auto`.
+is not `80`, also publishes that same port number. Manual mappings for other
+services can still be used alongside `auto`.
+
+When updating from an earlier version, existing saved `ports` values are
+preserved. Replace the previous Home Assistant mappings with `auto` rather than
+adding `auto` alongside them. Other manual mappings can be kept unchanged:
+
+```yaml
+# Before
+ports:
+  - "8123"
+  - "8123:80"
+  - 22
+
+# After
+ports:
+  - "auto"
+  - 22
+```
 
 The accepted syntax of this configuration is:
 
@@ -338,8 +355,8 @@ Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
 in the Software without restriction, including without limitation the rights
 to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+copies of the Software, and to permit persons to whom the Software is furnished
+to do so, subject to the following conditions:
 
 The above copyright notice and this permission notice shall be included in all
 copies or substantial portions of the Software.
