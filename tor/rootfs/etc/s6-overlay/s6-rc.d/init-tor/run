@@ -231,7 +231,7 @@ then
 
             public_key=$(
                 openssl pkey -pubout \
-                    <<< "${key}" \
+                <<< "${key}" \
                 | sed -e '/----.*PUBLIC KEY----\|^[[:space:]]*$/d' \
                 | base64 -d \
                 | tail -c 32 \
