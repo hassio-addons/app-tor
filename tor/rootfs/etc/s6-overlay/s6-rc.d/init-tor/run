@@ -107,9 +107,7 @@ if bashio::config.true 'hidden_services'; then
     for port in $(bashio::config 'ports'); do
         if [[ "${port}" == 'auto' ]]; then
             if [[ -z "${homeassistant_port}" ]]; then
-                if ! homeassistant_port=$(
-                    bashio::api.supervisor GET /core/info false '.port'
-                ); then
+                if ! homeassistant_port=$(bashio::core.port); then
                     bashio::log.fatal \
                         'Unable to determine the Home Assistant Core port.'
                     bashio::exit.nok
