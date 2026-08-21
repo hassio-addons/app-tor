@@ -15,12 +15,12 @@ ARG WEBTUNNEL_VERSION=v0.0.2
 # Setup base
 RUN \
     apk add --no-cache \
-        coreutils=9.8-r1 \
+        coreutils=9.11-r0 \
         openssl=3.5.7-r0 \
-        tor=0.4.9.8-r0 \
+        tor=0.4.9.11-r0 \
     && apk add --no-cache --virtual .build-dependencies \
-        go=1.25.10-r0 \
-        git=2.52.0-r0 \
+        go=1.26.3-r0 \
+        git=2.54.0-r0 \
     && git clone -b "${OBFS_VERSION}" --single-branch --depth 1 \
         https://github.com/Yawning/obfs4.git /tmp/obfs4 \
     && go build -C /tmp/obfs4 -ldflags '-extldflags "-static" -s -w' -o /usr/local/bin/obfs4proxy ./obfs4proxy \
