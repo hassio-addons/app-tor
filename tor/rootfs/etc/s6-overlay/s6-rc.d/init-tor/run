@@ -174,17 +174,16 @@ if bashio::config.exists 'bridges' \
     && ! bashio::config.is_empty 'bridges';
 then
     bashio::log.info 'Use bridges:'
-    echo "UseBridges 1" >> "${torrc}"
+    {
+        echo "UseBridges 1"
+        # Add client for OBFS transport
+        echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/local/bin/obfs4proxy managed"
+        # Add client for Snowflake transport
+        echo "ClientTransportPlugin snowflake exec /usr/local/bin/snowflake"
+        # Add client for WebTunnel transport
+        echo "ClientTransportPlugin webtunnel exec /usr/local/bin/webtunnel"
+    } >> "${torrc}"
 
-    # Add client for OBFS transport
-    echo "ClientTransportPlugin obfs2,obfs3,obfs4,scramblesuit exec /usr/local/bin/obfs4proxy managed" >> "${torrc}"
-    
-    # Add client for Snowflake transport
-    echo "ClientTransportPlugin snowflake exec /usr/local/bin/snowflake" >> "${torrc}"
-
-    # Add client for WebTunnel transport
-    echo "ClientTransportPlugin webtunnel exec /usr/local/bin/webtunnel" >> "${torrc}"
-    
     # Add bridges
     while read -r bridge; do
         bashio::log.info "Bridge ${bridge}"
