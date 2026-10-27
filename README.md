@@ -123,4 +123,4 @@ SOFTWARE.
 [releases-shield]: https://img.shields.io/github/release/hassio-addons/app-tor.svg
 [releases]: https://github.com/hassio-addons/app-tor/releases
 [repository]: https://github.com/hassio-addons/repository
-[tor-hidden-service]: https://www.torproject.org/docs/hidden-services.html.en
+[tor-hidden-service]: https://support.torproject.org/about-tor/onion-services/what-is-a-dot-onion/
