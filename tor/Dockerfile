@@ -20,7 +20,7 @@ RUN \
         tor=0.4.9.15-r0 \
     && apk add --no-cache --virtual .build-dependencies \
         go=1.26.10-r0 \
-        git=2.54.0-r0 \
+        git=2.54.1-r0 \
     && git clone -b "${OBFS_VERSION}" --single-branch --depth 1 \
         https://github.com/Yawning/obfs4.git /tmp/obfs4 \
     && go build -C /tmp/obfs4 -ldflags '-extldflags "-static" -s -w' -o /usr/local/bin/obfs4proxy ./obfs4proxy \
