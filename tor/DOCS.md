@@ -384,7 +384,7 @@ SOFTWARE.
 [tor-browser-android]: https://www.torproject.org/download/#android
 [releases]: https://github.com/hassio-addons/app-tor/releases
 [semver]: http://semver.org/spec/v2.0.0.htm
-[tor-hidden-service]: https://www.torproject.org/docs/hidden-services.html.en
+[tor-hidden-service]: https://support.torproject.org/about-tor/onion-services/what-is-a-dot-onion/
 [tor-bridges-obfs4]: https://bridges.torproject.org/bridges/?transport=obfs4
 [tor-bridges-webtunnel]: https://bridges.torproject.org/bridges/?transport=webtunnel
 [what-is-snowflake]: https://support.torproject.org/censorship/what-is-snowflake/
